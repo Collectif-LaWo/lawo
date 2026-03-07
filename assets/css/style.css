@@ -171,6 +171,19 @@ backface-visibility:hidden;
 overflow:hidden;
 }
 
+.members-wrapper {
+    will-change: scroll-position;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    }
+    
+    .card {
+    will-change: transform;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    }
+
+
 /* ── RECTO ── */
 .card-front {
 background:linear-gradient(145deg,#1a1a2e,#16213e);
