@@ -158,12 +158,8 @@ cursor:pointer;
 perspective:1000px;
 }
 
-.card-inner {
-width:100%;aspect-ratio: 3/5;
-position:relative;
-transform-style:preserve-3d;
-transition:transform .8s cubic-bezier(.175,.885,.32,1.275);
-border-radius:18px;
+.card-inner { width:100%; aspect-ratio: 3/5; position:relative; transform-style:preserve-3d; transition:transform .8s cubic-bezier(.175,.885,.32,1.275); border-radius:18px; -webkit-transition:transform .8s cubic-bezier(.175,.885,.32,1.275); -moz-transition:transform .8s cubic-bezier(.175,.885,.32,1.275); -ms-transition:transform .8s cubic-bezier(.175,.885,.32,1.275); -o-transition:transform .8s cubic-bezier(.175,.885,.32,1.275);
+    touch-action: manipulation;
 }
 .card.flipped .card-inner { transform:rotateY(180deg); }
 
@@ -359,6 +355,8 @@ RESPONSIVE — tablette & mobile
 @media (max-width: 1100px) {
 .members-row {
 grid-template-columns:repeat(4,1fr);
+touch-action: pan-x;
+overscroll-behavior-x: contain;
 }
 }
 
