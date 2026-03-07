@@ -410,6 +410,21 @@ transform-style: preserve-3d;
     height: 380px;
 }
 
+.back-photo{
+    height: 40%;
+}
+
+.back-content {
+    height: 60%;
+    overflow-y: auto;
+    padding: 10px 12px;
+}
+
+.bio {
+    font-size: 0.65rem;
+    line-height: 1.5;
+}
+
 .front-photo {
     height: 55%;
 }
