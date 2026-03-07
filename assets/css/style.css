@@ -154,42 +154,38 @@ gap:16px;
 
 /* ── CARTE ── */
 .card {
-cursor:pointer;
-perspective:1000px;
-}
-
-.card-inner { width:100%; aspect-ratio: 3/5; position:relative; transform-style:preserve-3d; transition:transform .8s cubic-bezier(.175,.885,.32,1.275); border-radius:18px; -webkit-transition:transform .8s cubic-bezier(.175,.885,.32,1.275); -moz-transition:transform .8s cubic-bezier(.175,.885,.32,1.275); -ms-transition:transform .8s cubic-bezier(.175,.885,.32,1.275); -o-transition:transform .8s cubic-bezier(.175,.885,.32,1.275);
-    touch-action: manipulation;
-}
-.card.flipped .card-inner { transform:rotateY(180deg); }
-
-.card-front, .card-back {
-position:absolute; inset:0;
-border-radius:18px;
-backface-visibility:hidden;
--webkit-backface-visibility:hidden;
-overflow:hidden;
-}
-
-.members-wrapper {
-    will-change: scroll-position;
-    transform: translateZ(0);
-    -webkit-transform: translateZ(0);
+    cursor:pointer;
+    perspective:1000px;
     }
     
-    .card {
-    will-change: transform;
-    transform: translateZ(0);
-    -webkit-transform: translateZ(0);
+    .card-inner { width:100%; aspect-ratio: 3/5; position:relative; transform-style:preserve-3d; transition:transform .8s cubic-bezier(.175,.885,.32,1.275); border-radius:18px; -webkit-transition:transform .8s cubic-bezier(.175,.885,.32,1.275); -moz-transition:transform .8s cubic-bezier(.175,.885,.32,1.275); -ms-transition:transform .8s cubic-bezier(.175,.885,.32,1.275); -o-transition:transform .8s cubic-bezier(.175,.885,.32,1.275);
+        touch-action: manipulation;
     }
+    .card.flipped .card-inner { transform:rotateY(180deg); }
+    
+    .card-front, .card-back {
+    position:absolute; inset:0;
+    border-radius:18px;
+    backface-visibility:hidden;
+    -webkit-backface-visibility:hidden;
+    overflow:hidden;
+    }
+    
+    .members-wrapper {
+        will-change: scroll-position;
+        transform: translateZ(0);
+        -webkit-transform: translateZ(0);
+        }
+        
+        .card {
+        will-change: transform;
+        transform: translateZ(0);
+        -webkit-transform: translateZ(0);
+        }
 
-
+        
 /* ── RECTO ── */
-.card-front {
-background:linear-gradient(145deg,#1a1a2e,#16213e);
-border:1px solid rgba(255,255,255,.08);
-display:flex; flex-direction:column;
-transition:border-color .3s, box-shadow .3s;
+.card-front { background:linear-gradient(145deg,#1a1a2e,#16213e); border:1px solid rgba(255,255,255,.08); display:flex; flex-direction:column; transition:border-color .3s, box-shadow .3s; -webkit-transition:border-color .3s, box-shadow .3s; -moz-transition:border-color .3s, box-shadow .3s; -ms-transition:border-color .3s, box-shadow .3s; -o-transition:border-color .3s, box-shadow .3s;
 }
 .card:hover .card-front {
 border-color:var(--accent);
@@ -399,18 +395,19 @@ align-items: flex-start;
 width:160px; 
 flex-shrink:0;
 scroll-snap-align: start;
+height: 380px;
 }
 
 .card-inner { 
 aspect-ratio:unset; 
-height:280px;
+height:380px;
 transform-style: preserve-3d; 
 }
 
 .card-front, .card-back {
     position: absolute;
     inset: 0;
-    height: 260px;
+    height: 380px;
 }
 
 .front-photo {
