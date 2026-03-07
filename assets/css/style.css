@@ -365,9 +365,11 @@ grid-template-columns:repeat(4,1fr);
 @media (max-width: 768px) {
 /* Scroll horizontal sur mobile */
 .members-wrapper {
-padding:0 20px 40px;
+padding:0 16px 40px;
 overflow-x:auto;
-overflow-y:visible;
+overflow-y:hidden;
+-webkit-overflow-scrolling: touch;
+scroll-snap-type: x mandatory;
 }
 .members-wrapper::-webkit-scrollbar{ height:5px; }
 .members-wrapper::-webkit-scrollbar-track{ background:#111; }
@@ -378,14 +380,53 @@ display:flex;
 grid-template-columns:unset;
 gap:16px;
 min-width:max-content;
-padding:10px 0 20px;
+padding:10px 4px 20px;
+align-items: flex-start;
 }
 
-.card { width:160px; flex-shrink:0; }
-.card-inner { aspect-ratio:unset; height:280px; }
+.card { 
+width:160px; 
+flex-shrink:0;
+scroll-snap-align: start;
+}
 
-/* Scroll hint visible sur mobile */
-.scroll-hint { display:block; }
+.card-inner { 
+aspect-ratio:unset; 
+height:280px;
+transform-style: preserve-3d; 
+}
+
+.card-front, .card-back {
+    position: absolute;
+    inset: 0;
+    height: 260px;
+}
+
+.front-photo {
+    height: 55%;
+}
+
+.front-info {
+    padding: 8px 10px;
+}
+
+.member-name {
+    font-size: 0.55rem;
+}
+
+.member-role {
+    font-size: 0.65rem;
+}
+
+.scroll-hint {
+    display: block;
+}
+
+  /* Empêche les animations de faire bouger les cartes */
+.card {
+    animation: none;
+    -webkit-animation: none;
+}
 }
 
 @media (max-width: 480px) {
