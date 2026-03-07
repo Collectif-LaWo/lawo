@@ -395,12 +395,12 @@ align-items: flex-start;
 width:160px; 
 flex-shrink:0;
 scroll-snap-align: start;
-height: 380px;
+height: 420px !important;
 }
 
 .card-inner { 
 aspect-ratio:unset; 
-height:380px;
+height:420px !important;
 transform-style: preserve-3d; 
 }
 
@@ -411,18 +411,33 @@ transform-style: preserve-3d;
 }
 
 .back-photo{
-    height: 40%;
+    height: 35% !important;
 }
 
 .back-content {
-    height: 60%;
-    overflow-y: auto;
-    padding: 10px 12px;
+    height: 65% !important;
+    overflow-y: auto !important;
+    padding: 8px 10px !important;
 }
 
 .bio {
-    font-size: 0.65rem;
-    line-height: 1.5;
+    font-size: 0.85rem !important;
+    line-height: 1.4 !important;
+}
+
+.instr-tag{
+    font-size: 0.55rem !important;
+    padding: 2px 5px !important;
+}
+
+.social-btn {
+    width: 40px !important;
+    height: 38px !important;
+}
+
+.social-btn svg {
+    width: 33px !important;
+    height: 23px !important;
 }
 
 .front-photo {
