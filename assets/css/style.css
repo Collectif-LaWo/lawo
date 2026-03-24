@@ -460,7 +460,7 @@ transform-style: preserve-3d;
     display: block;
 }
 
-  /* Empêche les animations de faire bouger les cartes */
+  /* blocaqge déplacement des cartes */
 .card {
     animation: none;
     -webkit-animation: none;
@@ -526,3 +526,5 @@ transform-style: preserve-3d;
     grid-template-columns: 1fr;
     }
     }
+
+    
