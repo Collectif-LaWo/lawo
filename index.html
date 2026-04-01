@@ -272,6 +272,16 @@
 // ══════════════════════════════════════════════
 const events = [
 {
+title: "SAMEDI — 11 avril — 23h30 / 05h30",
+lieu: "Chapiteau, Marseille",
+adresse: "38 Trav. Notre Dame du Bon Secours, 13003 Marseille",
+photo: "img/events/shotone.jpg",
+artistes: ["VV8", "San P", "Loukoum", "Soraya", "Ema"],
+shotgun: "https://shotgun.live/fr/events/shotones",
+accent: "#4edb2b",
+grad: "linear-gradient(135deg,#ff0000,#ec6238)"
+},
+{
 title: "SAMEDI — 14 mars— 19h / 06h00",
 lieu: "Panic Room, PARIS",
 adresse: "101 Rue Amelot, 75011 Paris",
@@ -361,78 +371,134 @@ eventsGrid.appendChild(card);
     }
     ];
     
-    // Style de la grille
-    const galerieGrid = document.getElementById('galerieGrid');
-    galerieGrid.style.cssText =   `display: grid;   grid-template-columns: repeat(3, 1fr);   gap: 8px;   max-width: 900px;   margin: 0 auto;`;
-    
-    posts.forEach((p, i) => {
-    const item = document.createElement('div');
-    item.style.cssText =     `
-    position: relative;     
-    display: block;     
-    aspect-ratio: 1/1;     
-    overflow: hidden;     
-    border-radius: 12px;      
-    opacity: 0;
-    cursor: default;      
-    transform: scale(0.9);     
-    transition: opacity .5s ease, transform .5s ease;`  ;
-    
-    // Animation d'apparition décalée
-    setTimeout(() => {
+
+
+    // ── Grille
+const galerieGrid = document.getElementById('galerieGrid');
+galerieGrid.style.cssText = `
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  max-width: 900px;
+  margin: 0 auto;
+`;
+
+// ── Lightbox (créée une seule fois dans le DOM)
+const lb = document.createElement('div');
+lb.id = 'lightbox';
+lb.innerHTML = `
+  <div id="lb-overlay"></div>
+  <button id="lb-close" aria-label="Fermer">✕</button>
+  <button id="lb-prev" aria-label="Précédent">&#8249;</button>
+  <button id="lb-next" aria-label="Suivant">&#8250;</button>
+  <div id="lb-track-wrap">
+    <div id="lb-track"></div>
+  </div>
+  <div id="lb-dots"></div>
+`;
+document.body.appendChild(lb);
+
+let currentIndex = 0;
+
+// ── Construit les slides une seule fois
+const track  = document.getElementById('lb-track');
+const dots   = document.getElementById('lb-dots');
+
+posts.forEach((p, i) => {
+  // slide
+  const slide = document.createElement('div');
+  slide.className = 'lb-slide';
+  const img = document.createElement('img');
+  img.src = p.photo;
+  img.alt = p.legende || `Photo ${i + 1}`;
+  slide.appendChild(img);
+  track.appendChild(slide);
+
+  // dot
+  const dot = document.createElement('button');
+  dot.className = 'lb-dot';
+  dot.setAttribute('aria-label', `Photo ${i + 1}`);
+  dot.addEventListener('click', () => goTo(i));
+  dots.appendChild(dot);
+});
+
+function goTo(idx) {
+  currentIndex = (idx + posts.length) % posts.length;
+  track.style.transform = `translateX(-${currentIndex * 100}%)`;
+  document.querySelectorAll('.lb-dot').forEach((d, i) =>
+    d.classList.toggle('active', i === currentIndex)
+  );
+}
+
+function openLightbox(idx) {
+  lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  goTo(idx);
+}
+
+function closeLightbox() {
+  lb.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('lb-close').addEventListener('click', closeLightbox);
+document.getElementById('lb-overlay').addEventListener('click', closeLightbox);
+document.getElementById('lb-prev').addEventListener('click', () => goTo(currentIndex - 1));
+document.getElementById('lb-next').addEventListener('click', () => goTo(currentIndex + 1));
+
+// ── Keyboard
+document.addEventListener('keydown', e => {
+  if (!lb.classList.contains('open')) return;
+  if (e.key === 'ArrowLeft')  goTo(currentIndex - 1);
+  if (e.key === 'ArrowRight') goTo(currentIndex + 1);
+  if (e.key === 'Escape')     closeLightbox();
+});
+
+// ── Touch swipe mobile
+let touchStartX = 0;
+track.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+track.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  if (Math.abs(dx) > 40) goTo(currentIndex + (dx < 0 ? 1 : -1));
+});
+
+// ── Génération des vignettes dans la grille
+posts.forEach((p, i) => {
+  const item = document.createElement('div');
+  item.className = 'galerie-item';
+  item.setAttribute('role', 'button');
+  item.setAttribute('tabindex', '0');
+  item.setAttribute('aria-label', `Ouvrir photo ${i + 1}`);
+
+  // animation d'apparition décalée
+  setTimeout(() => {
     item.style.opacity = '1';
     item.style.transform = 'scale(1)';
-    }, i * 100);
-    
-    const img = document.createElement('img');
-    img.src = p.photo;
-    img.alt = p.legende;
-    img.style.cssText =     `width: 100%;     height: 100%;     object-fit: cover;     display: block;     transition: transform .4s ease;`  ;
-    
-    // Overlay au hover
-    const overlay = document.createElement('div');
-    overlay.style.cssText =     `
-    position: absolute;     
-    inset: 0;     
-    background: linear-gradient(135deg, rgba(255 255 128 / 0.5), rgba(131,56,236,0.85));     
-    display: flex;     
-    flex-direction: column;     
-    align-items: center;     
-    justify-content: center;     
-    opacity: 0;     
-    transition: opacity .3s ease;     
-    padding: 16px;     text-align: center;     
-    border-radius: 12px;`  ;
-    
-    item.addEventListener('mouseenter', () => {
-    overlay.style.opacity = '0.5';
-    img.style.transform = 'scale(1.08)';
-    });
-    item.addEventListener('mouseleave', () => {
-    overlay.style.opacity = '0';
-    img.style.transform = 'scale(1)';
-    });
-    
-    
+  }, i * 100);
+
+  const img = document.createElement('img');
+  img.src = p.photo;
+  img.alt = p.legende || `Photo ${i + 1}`;
+
+  const overlay = document.createElement('div');
+  overlay.className = 'galerie-overlay';
+  overlay.innerHTML = `<span style="font-size:2.2rem;filter:drop-shadow(0 2px 8px rgba(0,0,0,.5));">🧡</span>`;
+
+  item.appendChild(img);
+  item.appendChild(overlay);
+  galerieGrid.appendChild(item);
+
+  const open = () => openLightbox(i);
+  item.addEventListener('click', open);
+  item.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') open(); });
+});
 
 
-    
-    // Sur mobile — tap pour voir la légende
-    item.addEventListener('touchstart', () => {
-    overlay.style.opacity = '1';
-    img.style.transform = 'scale(1.05)';
-    });
-    item.addEventListener('touchend', () => {
-    setTimeout(() => {
-    overlay.style.opacity = '0';
-    img.style.transform = 'scale(1)';
-    }, 800);
-    });
-    
-    item.appendChild(img);
-    item.appendChild(overlay);
-    galerieGrid.appendChild(item);
-    });
+
+
+
+
+
 
 </script>
 

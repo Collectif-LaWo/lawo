@@ -528,3 +528,206 @@ transform-style: preserve-3d;
     }
 
     
+
+
+
+    /* GALERIE */
+.galerie-item {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: 12px;
+  cursor: pointer;
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity .5s ease, transform .5s ease;
+}
+
+.galerie-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .4s ease;
+}
+
+.galerie-item:hover img,
+.galerie-item:focus img {
+  transform: scale(1.08);
+}
+
+.galerie-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,85,0,.45), rgba(131,56,236,.75));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity .3s ease;
+  border-radius: 12px;
+}
+
+.galerie-overlay svg {
+  width: 36px;
+  height: 36px;
+  color: #fff;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,.5));
+}
+
+.galerie-item:hover .galerie-overlay,
+.galerie-item:focus .galerie-overlay {
+  opacity: 1;
+}
+
+
+/* ══════════════════════════════════════════════
+   LIGHTBOX
+   ══════════════════════════════════════════════ */
+#lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity .35s ease, visibility .35s ease;
+}
+
+#lightbox.open {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Fond sombre */
+#lb-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, .92);
+  backdrop-filter: blur(6px);
+}
+
+/* Bouton ✕ */
+#lb-close {
+  position: absolute;
+  top: 18px;
+  right: 22px;
+  z-index: 10;
+  background: rgba(255,255,255,.1);
+  border: 1px solid rgba(255,255,255,.25);
+  color: #fff;
+  font-size: 1.4rem;
+  line-height: 1;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background .25s, transform .25s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#lb-close:hover {
+  background: #ff5500;
+  transform: rotate(90deg) scale(1.1);
+}
+
+/* Flèches prev / next */
+#lb-prev,
+#lb-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.2);
+  color: #fff;
+  font-size: 2.2rem;
+  line-height: 1;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background .25s, transform .25s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#lb-prev { left: 16px; }
+#lb-next { right: 16px; }
+#lb-prev:hover { background: #8338ec; transform: translateY(-50%) scale(1.1); }
+#lb-next:hover { background: #8338ec; transform: translateY(-50%) scale(1.1); }
+
+/* Fenêtre de slide */
+#lb-track-wrap {
+  position: relative;
+  z-index: 5;
+  width: min(90vw, 860px);
+  max-height: 82vh;
+  overflow: hidden;
+  border-radius: 16px;
+}
+
+/* Rail qui contient toutes les images côte à côte */
+#lb-track {
+  display: flex;
+  transition: transform .45s cubic-bezier(.4,0,.2,1);
+  will-change: transform;
+}
+
+.lb-slide {
+  min-width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lb-slide img {
+  max-width: 100%;
+  max-height: 82vh;
+  object-fit: contain;
+  border-radius: 12px;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* Dots de navigation */
+#lb-dots {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  gap: 8px;
+}
+
+.lb-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,.3);
+  cursor: pointer;
+  padding: 0;
+  transition: background .25s, transform .25s;
+}
+.lb-dot.active {
+  background: #ff5500;
+  transform: scale(1.4);
+}
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+  #lb-prev,
+  #lb-next {
+    width: 38px;
+    height: 38px;
+    font-size: 1.6rem;
+  }
+  #lb-prev { left: 6px; }
+  #lb-next { right: 6px; }
+}
