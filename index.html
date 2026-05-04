@@ -62,7 +62,18 @@
     </div>
     </section>
 
-<!-- SECTION ÉVÉNEMENTS AFFICHE-->
+<!-- ── CARROUSEL GRANDE AFFICHE ── -->
+<div id="carouselBox" style="max-width:450px;margin:0 auto;border-radius:24px;overflow:hidden;position:relative;background:#111;box-shadow:0 20px 60px rgba(0,0,0,.4);">
+    <div id="carouselSlides" style="position:relative;height:300px;"></div>
+    <!-- Flèches -->
+    <button id="carouselPrev" style="position:absolute;top:50%;left:10px;transform:translateY(-50%);background:rgba(0,0,0,.5);border:none;color:#fff;font-size:1.5rem;width:36px;height:36px;border-radius:50%;cursor:pointer;z-index:10;display:flex;align-items:center;justify-content:center;">‹</button>
+    <button id="carouselNext" style="position:absolute;top:50%;right:10px;transform:translateY(-50%);background:rgba(0,0,0,.5);border:none;color:#fff;font-size:1.5rem;width:36px;height:36px;border-radius:50%;cursor:pointer;z-index:10;display:flex;align-items:center;justify-content:center;">›</button>
+    <div id="carouselDots" style="display:flex;justify-content:center;gap:8px;padding:12px;"></div>
+  </div>
+
+
+
+<!-- SECTION ÉVÉNEMENTS BABYAFFICHE-->
     <section id="events">
         <div id="eventsGrid">
         </div>
@@ -82,6 +93,7 @@
     <div style="text-align:center;margin-top:40px;">
     </div>
     </section>
+
 
 
 <footer>© 2026 LA WO MARSEILLE · TOUS DROITS RÉSERVÉS</footer>
@@ -165,6 +177,23 @@
             tiktok: `<svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>`
         };
 
+        // Flèches carrousel
+document.getElementById('carouselPrev').addEventListener('click', () => {
+  slideImgs[curSlide].style.opacity = '0';
+  dotEls[curSlide].style.background = 'rgba(255,255,255,.3)';
+  curSlide = (curSlide - 1 + affiches.length) % affiches.length;
+  slideImgs[curSlide].style.opacity = '1';
+  dotEls[curSlide].style.background = '#fff';
+});
+
+document.getElementById('carouselNext').addEventListener('click', () => {
+  slideImgs[curSlide].style.opacity = '0';
+  dotEls[curSlide].style.background = 'rgba(255,255,255,.3)';
+  curSlide = (curSlide + 1) % affiches.length;
+  slideImgs[curSlide].style.opacity = '1';
+  dotEls[curSlide].style.background = '#fff';
+});
+
         // ── Génération des cartes profil
         const row = document.getElementById('membersRow');
 
@@ -190,7 +219,26 @@
                 `<a class="social-btn" href="${url}" target="_blank" title="${net}" onclick="event.stopPropagation()">${icons[net] || ''}</a>`
             ).join('');
 
-            card.innerHTML = `<div class="card-inner">       <div class="card-front">         <div class="front-photo">${frontPhotoHtml}</div>         <div class="front-info">           <div class="member-name">${m.name}</div>           <div class="member-role">${m.role}</div>           <div class="note-icons">             <span class="note-icon">♩</span>             <span class="note-icon">♪</span>             <span class="note-icon">♫</span>           </div>         </div>       </div>       <div class="card-back">         <div class="back-photo">${backPhotoHtml}</div>         <div class="back-content">           <div class="back-name">${m.name}</div>           <div class="back-divider"></div>           <div class="bio">${m.bio}</div>           <div class="instruments">             ${m.instruments.map(ins => `<span class="instr-tag">${ins}</span>`).join('')}           </div>           <div class="socials">${socialsHtml}</div>         </div>       </div>     </div>`;
+            card.innerHTML = `<div class="card-inner">       
+                <div class="card-front">         
+                <div class="front-photo">${frontPhotoHtml}</div>        
+                <div class="front-info">          
+                <div class="member-name">${m.name}</div>           
+                <div class="member-role">${m.role}</div>           
+                <div class="note-icons">             
+                <span class="note-icon">♩</span>             
+                <span class="note-icon">♪</span>             
+                <span class="note-icon">♫</span>           
+                </div>         </div>       </div>       
+                <div class="card-back">         
+                <div class="back-photo">${backPhotoHtml}</div>         
+                <div class="back-content">          
+                <div class="back-name">${m.name}</div>           
+                <div class="back-divider"></div>           
+                <div class="bio">${m.bio}</div>           
+                <div class="instruments">             
+                    ${m.instruments.map(ins => `<span class="instr-tag">${ins}</span>`).join('')}           </div>           
+                <div class="socials">${socialsHtml}</div>         </div>       </div>     </div>`;
 
             card.addEventListener('click', e => {
                 card.classList.toggle('flipped');
@@ -270,9 +318,31 @@
 // ══════════════════════════════════════════════
 //  ÉVÉNEMENTS
 // ══════════════════════════════════════════════
+// ── CARROUSEL AFFICHE ──
+const affiches = [
+  "img/events/next-05.jpg",
+  "img/events/next-05-2.jpg",
+  "img/events/next-05-3.jpg",
+  "img/events/next-05-4.jpg",
+];
+
+// ── BABY AFFICHE ──
 const events = [
 {
-title: "SAMEDI — 11 avril — 23h30 / 05h30",
+title: "PINATA, BARRI - SAMEDI - 09 MAI - 17h00 / 01h00",
+lieu: "Montpellier",
+adresse: "PINATA - 14 Rue Rondelet, 34000 Montpellier, BARRI - 4 Bd Louis Blanc, 34000 Montpellier",
+photos: ["img/events/barri-pinata.jpg"],
+artistes: ["VV8", "Heal", "Ema"],
+lien: "https://www.instagram.com/p/DX4aPLzgh3V/?img_index=1", 
+lienTexte: "Voir sur Instagram",  
+accent: "#4edb2b",
+grad: "linear-gradient(135deg,#ff0000,#ec6238)"
+
+},
+
+{
+title: "CHAPITEAU - SAMEDI — 11 AVRIL — 23h30 / 05h30",
 lieu: "Chapiteau, Marseille",
 adresse: "38 Trav. Notre Dame du Bon Secours, 13003 Marseille",
 photo: "img/events/shotone.jpg",
@@ -281,26 +351,37 @@ shotgun: "https://shotgun.live/fr/events/shotones",
 accent: "#4edb2b",
 grad: "linear-gradient(135deg,#ff0000,#ec6238)"
 },
-{
-title: "SAMEDI — 14 mars— 19h / 06h00",
-lieu: "Panic Room, PARIS",
-adresse: "101 Rue Amelot, 75011 Paris",
-photo: "img/events/post-panicroom.png",
-artistes: ["VV8", "AKISSI", "EMA", "HEAL"],
-shotgun: "https://shotgun.live/fr/events/panic-all-stars-friends-13",
-accent: "#4edb2b",
-grad: "linear-gradient(135deg,#ff0000,#ec6238)"
-},
-{
-title: "SAMEDI — 14 mars — 21h30 / 01h30",
-lieu: "La Dame du Mont, Marseille",
-adresse: "30 Pl. Notre Dame du Mont, 13006 Marseille",
-photo: "img/events/event-ddm-03.jpg",
-artistes: ["MONA", "SAN P"],
-shotgun: "https://shotgun.live/fr/events/mona-san-p-la-dame-du-mont",
-accent: "#ff8b67",
-grad: "linear-gradient(135deg,#ff0000,#ec6238)"
-},
+
+// {
+// title: "SAMEDI — 11 avril — 23h30 / 05h30",
+// lieu: "Chapiteau, Marseille",
+// adresse: "38 Trav. Notre Dame du Bon Secours, 13003 Marseille",
+// photo: "img/events/shotone.jpg",
+// artistes: ["VV8", "San P", "Loukoum", "Soraya", "Ema"],
+// shotgun: "https://shotgun.live/fr/events/shotones",
+// accent: "#4edb2b",
+// grad: "linear-gradient(135deg,#ff0000,#ec6238)"
+// },
+// {
+// title: "SAMEDI — 14 mars— 19h / 06h00",
+// lieu: "Panic Room, PARIS",
+// adresse: "101 Rue Amelot, 75011 Paris",
+// photo: "img/events/post-panicroom.png",
+// artistes: ["VV8", "AKISSI", "EMA", "HEAL"],
+// shotgun: "https://shotgun.live/fr/events/panic-all-stars-friends-13",
+// accent: "#4edb2b",
+// grad: "linear-gradient(135deg,#ff0000,#ec6238)"
+// },
+// {
+// title: "SAMEDI — 14 mars — 21h30 / 01h30",
+// lieu: "La Dame du Mont, Marseille",
+// adresse: "30 Pl. Notre Dame du Mont, 13006 Marseille",
+// photo: "img/events/event-ddm-03.jpg",
+// artistes: ["MONA", "SAN P"],
+// shotgun: "https://shotgun.live/fr/events/mona-san-p-la-dame-du-mont",
+// accent: "#ff8b67",
+// grad: "linear-gradient(135deg,#ff0000,#ec6238)"
+// },
 ];
 
 const eventsGrid = document.getElementById('eventsGrid');
@@ -318,16 +399,220 @@ card.style.borderColor = 'rgba(255,255,255,.06)';
 card.style.boxShadow = 'none';
 };
 
-const photoHtml = ev.photo
-? `<img src="${ev.photo}" alt="${ev.title}" style="width:100%;height:100%;object-fit:cover;display:block;" onerror="this.parentElement.style.background='${ev.grad}'">`
-: '';
 
-card.innerHTML =     `<div style="height:200px;background:${ev.grad};position:relative;overflow:hidden;">       ${photoHtml}       <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.7),transparent);"></div>       <div style="position:absolute;bottom:16px;left:16px;right:16px;">         <div style="font-family:'Orbitron',sans-serif;font-size:.85rem;font-weight:700;letter-spacing:2px;color:#fff;text-transform:uppercase;">${ev.title}</div>       </div>     </div>     <div style="padding:20px;">       <div style="display:flex;align-items:center;gap:8px;font-size:.82rem;color:#aaa;margin-bottom:16px;">         <span style="color:${ev.accent}">📍</span> ${ev.lieu} — ${ev.adresse}       </div>       <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;">         ${ev.artistes.map(a =>`
+
+// Carrousel Photo évent
+const photos = Array.isArray(ev.photos) ? ev.photos : [ev.photo];
+let current = 0;
+const carouselId = 'carousel_' + Math.random().toString(36).substr(2,9);
+
+const photoHtml = `
+  <div id="${carouselId}" style="position:relative;width:100%;height:100%;overflow:hidden;">
+    ${photos.map((src,idx) => `
+      <img src="${src}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:${idx===0?1:0};transition:opacity .8s ease;">
+    `).join('')}
+    ${photos.length > 1 ? `
+      <div style="position:absolute;bottom:6px;right:10px;display:flex;gap:4px;z-index:4;">
+        ${photos.map((_,idx) => `
+          <div class="dot_${carouselId}" style="width:6px;height:6px;border-radius:50%;background:${idx===0?'#fff':'rgba(255,255,255,.4)'};transition:background .3s;"></div>
+        `).join('')}
+      </div>
+    ` : ''}
+  </div>
+`;
+
+// Auto défilement des photos
+if(photos.length > 1) {
+  setTimeout(() => {
+    const el = document.getElementById(carouselId);
+    if(!el) return;
+    const imgs = el.querySelectorAll('img');
+    const dots = el.querySelectorAll('.dot_' + carouselId);
+    let cur = 0;
+    setInterval(() => {
+      imgs[cur].style.opacity = '0';
+      if(dots[cur]) dots[cur].style.background = 'rgba(255,255,255,.4)';
+      cur = (cur + 1) % imgs.length;
+      imgs[cur].style.opacity = '1';
+      if(dots[cur]) dots[cur].style.background = '#fff';
+    }, 2500);
+  }, 500);
+}
+
+card.innerHTML =     
+`<div style="height:200px;background:${ev.grad};position:relative;overflow:hidden;">       ${photoHtml}       
+<div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.7),transparent);"></div>       
+<div style="position:absolute;bottom:16px;left:16px;right:16px;">         
+<div style="font-family:'Orbitron',sans-serif;font-size:.85rem;font-weight:700;letter-spacing:2px;color:#fff;text-transform:uppercase;">${ev.title}</div>       </div>     </div>     
+<div style="padding:20px;">      
+<div style="display:flex;align-items:center;gap:8px;font-size:.82rem;color:#aaa;margin-bottom:16px;">        
+<span style="color:${ev.accent}">📍</span> ${ev.lieu} — ${ev.adresse}       </div>       
+<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;">         ${ev.artistes.map(a =>`
 <span style="background:rgba(255,255,255,.05);border:1px solid ${ev.accent};padding:3px 10px;border-radius:20px;font-size:.6rem;letter-spacing:1px;color:${ev.accent};text-transform:uppercase;">${a}</span>
-`).join('')}       </div>       <a href="${ev.shotgun}" target="_blank"         style="display:block;text-align:center;padding:12px;border-radius:50px;background:${ev.grad};color:#fff;text-decoration:none;font-family:'Orbitron',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;transition:opacity .3s;"         onmouseenter="this.style.opacity='.8'"         onmouseleave="this.style.opacity='1'">         🎟 Réserver sur Shotgun       </a>     </div>`   ;
+`).join('')}       </div>  
+${ev.lien ? `
+  <a href="${ev.lien}" target="_blank"
+    style="display:block;text-align:center;padding:12px;margin-top:8px;border-radius:50px;background:rgba(255,255,255,.05);border:1px solid ${ev.accent};color:${ev.accent};text-decoration:none;font-family:'Orbitron',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;transition:opacity .3s;"
+    onmouseenter="this.style.opacity='.8'"
+    onmouseleave="this.style.opacity='1'">
+    ${ev.lienTexte || 'Voir plus'}
+  </a>
+` : ''}
+${ev.shotgun ? `<a href="${ev.shotgun}" target="_blank" style="display:block;text-align:center;padding:12px;border-radius:50px;background:${ev.grad};color:#fff;text-decoration:none;font-family:'Orbitron',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;transition:opacity .3s;" onmouseenter="this.style.opacity='.8'" onmouseleave="this.style.opacity='1'">🎟 Réserver sur Shotgun</a>` : ''}     </div>
+`   ;
 eventsGrid.appendChild(card);
+
 });
 
+
+
+const slidesEl = document.getElementById('carouselSlides');
+const dotsEl = document.getElementById('carouselDots');
+let curSlide = 0;
+
+const slideImgs = affiches.map((src, idx) => {
+  const img = document.createElement('img');
+  img.src = src;
+  img.style.cssText = `
+    position:absolute; inset:0;
+    width:100%; height:100%;
+    object-fit:cover;
+    opacity:${idx === 0 ? 1 : 0};
+    transition:opacity .8s ease;
+  `;
+  slidesEl.appendChild(img);
+  return img;
+});
+
+const dotEls = affiches.map((_, idx) => {
+  const d = document.createElement('div');
+  d.style.cssText = `
+    width:8px; height:8px; border-radius:50%;
+    background:${idx === 0 ? '#fff' : 'rgba(255,255,255,.3)'};
+    transition:background .3s; cursor:pointer;
+  `;
+  d.addEventListener('click', () => goTo(idx));
+  dotsEl.appendChild(d);
+  return d;
+});
+
+function goToSlide(idx) {
+  slideImgs[curSlide].style.opacity = '0';
+  d.addEventListener('click', () => goToSlide(idx));
+  curSlide = idx;
+  slideImgs[curSlide].style.opacity = '1';
+  dotEls[curSlide].style.background = '#fff';
+}
+
+// Auto défilement toutes les 3 secondes
+setInterval(() => {
+  slideImgs[curSlide].style.opacity = '0';
+  dotEls[curSlide].style.background = 'rgba(255,255,255,.3)';
+  curSlide = (curSlide + 1) % affiches.length;
+  slideImgs[curSlide].style.opacity = '1';
+  dotEls[curSlide].style.background = '#fff';
+}, 3000);
+
+// Carroussel une box séparée
+const lbC = document.createElement('div');
+lbC.style.cssText = `
+  position:fixed; inset:0;
+  background:rgba(0,0,0,.95);
+  z-index:9999;
+  display:flex; align-items:center; justify-content:center;
+  opacity:0; pointer-events:none;
+  transition:opacity .3s ease;
+`;
+const lbCImg = document.createElement('img');
+lbCImg.style.cssText = `
+  max-width:90vw; max-height:85vh;
+  object-fit:contain; border-radius:12px;
+  box-shadow:0 0 60px rgba(131,56,236,.5);
+`;
+const lbCClose = document.createElement('button');
+lbCClose.textContent = '✕';
+lbCClose.style.cssText = `
+  position:absolute; top:20px; right:24px;
+  font-size:2rem; color:#fff;
+  background:none; border:none;
+  cursor:pointer; opacity:.7;
+`;
+const lbCPrev = document.createElement('button');
+lbCPrev.textContent = '‹';
+lbCPrev.style.cssText = `
+  position:absolute; left:20px; top:50%;
+  transform:translateY(-50%);
+  background:rgba(0,0,0,.5); border:none;
+  color:#fff; font-size:2.5rem;
+  width:46px; height:46px;
+  border-radius:50%; cursor:pointer;
+  z-index:10;
+`;
+
+const lbCNext = document.createElement('button');
+lbCNext.textContent = '›';
+lbCNext.style.cssText = `
+  position:absolute; right:20px; top:50%;
+  transform:translateY(-50%);
+  background:rgba(0,0,0,.5); border:none;
+  color:#fff; font-size:2.5rem;
+  width:46px; height:46px;
+  border-radius:50%; cursor:pointer;
+  z-index:10;
+`;
+
+lbC.appendChild(lbCClose);
+lbC.appendChild(lbCPrev);
+lbC.appendChild(lbCNext);
+lbC.appendChild(lbCImg);
+document.body.appendChild(lbC);
+
+// Navigation flèches lightbox
+lbCPrev.addEventListener('click', e => {
+  e.stopPropagation();
+  curSlide = (curSlide - 1 + affiches.length) % affiches.length;
+  lbCImg.src = affiches[curSlide];
+});
+
+lbCNext.addEventListener('click', e => {
+  e.stopPropagation();
+  curSlide = (curSlide + 1) % affiches.length;
+  lbCImg.src = affiches[curSlide];
+});
+
+// Swipe mobile lightbox
+let lbTouchX = 0;
+lbCImg.addEventListener('touchstart', e => { lbTouchX = e.touches[0].clientX; }, { passive:true });
+lbCImg.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - lbTouchX;
+  if(Math.abs(dx) > 40) {
+    curSlide = (curSlide + (dx < 0 ? 1 : -1) + affiches.length) % affiches.length;
+    lbCImg.src = affiches[curSlide];
+  }
+});
+
+lbCClose.addEventListener('click', () => {
+  lbC.style.opacity = '0';
+  lbC.style.pointerEvents = 'none';
+  document.body.style.overflow = '';
+});
+lbC.addEventListener('click', e => {
+  if(e.target === lbC) {
+    lbC.style.opacity = '0';
+    lbC.style.pointerEvents = 'none';
+    document.body.style.overflow = '';
+  }
+});
+
+slideImgs.forEach(img => {
+  img.style.cursor = 'pointer';
+  img.addEventListener('click', () => {
+    lbCImg.src = affiches[curSlide];
+    lbC.style.opacity = '1';
+    lbC.style.pointerEvents = 'all';
+    document.body.style.overflow = 'hidden';
+  });
+});
 
     // ══════════════════════════════════════════════
     //  PHOTO
@@ -383,7 +668,7 @@ galerieGrid.style.cssText = `
   margin: 0 auto;
 `;
 
-// ── Lightbox (créée une seule fois dans le DOM)
+// ── Lightbox
 const lb = document.createElement('div');
 lb.id = 'lightbox';
 lb.innerHTML = `
@@ -400,7 +685,7 @@ document.body.appendChild(lb);
 
 let currentIndex = 0;
 
-// ── Construit les slides une seule fois
+// ── Slide 1
 const track  = document.getElementById('lb-track');
 const dots   = document.getElementById('lb-dots');
 
